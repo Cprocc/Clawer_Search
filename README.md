@@ -17,27 +17,27 @@ DF-team
 4. 修改Eclipse下文件的配置文件:  
     conf下的nutch-site.xml, 
 
-        ```java
-        <?xml version="1.0"?>
-        <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
-        
-        <!-- Put site-specific property overrides in this file. -->
-        
-        <configuration>
-        
-        <property>
-        <name>http.agent.name</name>
-        <value>*</value>
-        </property>
-        
-        </configuration> 
+```xml
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 
-        ```
+<!-- Put site-specific property overrides in this file. -->
 
-        ---
-    crawl-urlfilter.txt,
+<configuration>
 
-    将 `# accept hosts in MY.DOMAIN.NAME  +^http://([a-z0-9]*\.)*MY.DOMAIN.NAME/`替换成 `# accept hosts in MY.DOMAIN.NAME  +^http://([a-z0-9]*\.)*`
+<property>
+<name>http.agent.name</name>
+<value>*</value>
+</property>
+
+</configuration> 
+```
+
+---
+crawl-urlfilter.txt,
+
+将 `# accept hosts in MY.DOMAIN.NAME  +^http://([a-z0-9]*\.)*MY.DOMAIN.NAME/`替换成 `# accept hosts in MY.DOMAIN.NAME  +^http://([a-z0-9]*\.)*`
+
 5. 在根目录新建urls文件夹，并在其中新建一个urls.txt文件，是用来存放要爬取的url测试Crawl类。本例中urls中的内容 
    
    ```
