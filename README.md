@@ -11,8 +11,8 @@ DF-team
 1. 下载对应的nutch版本  http://archive.apache.org/dist/nutch/ 
 2. 在Eclipse中新建java project，project name假设为nutch-1.1-test
 3.  - 将nutch-1.1\src\java目录下的org文件夹整个复制到新建Java项目nutch-1.1-test的src包下
-    - 将nutch-1.1目录下的conf、lib、plugins复制到与src同级目录
-    - 在conf目录上单击右键→BuildPath→UseasSourceFolder，将配置文件conf加到path中   
+    - 将nutch-1.1目录下的conf、lib、plugins复制到与nutch-1.1-test中src同级目录
+    - 在nutch-1.1-test中conf目录上单击右键→BuildPath→UseasSourceFolder，将配置文件conf加到path中   
     - 在Nutch-1.1-test目录上单击右键→BuildPath→ConfigureBuildPath…，然后将lib中所有的jar包添加到libraries里面
 4. 修改Eclipse下文件的配置文件:  
     conf下的nutch-site.xml, 
@@ -34,11 +34,11 @@ DF-team
 ```
 
 ---
-crawl-urlfilter.txt,
+conf下的crawl-urlfilter.txt:
 
 将 `# accept hosts in MY.DOMAIN.NAME  +^http://([a-z0-9]*\.)*MY.DOMAIN.NAME/`替换成 `# accept hosts in MY.DOMAIN.NAME  +^http://([a-z0-9]*\.)*`
 
-5. 在根目录新建urls文件夹，并在其中新建一个urls.txt文件，是用来存放要爬取的url测试Crawl类。本例中urls中的内容 
+5. 在项目的根目录新建urls文件夹，并在其中新建一个urls.txt文件，是用来存放要爬取的url测试Crawl类。本例中urls中的内容 
    
    ```
    http://www.baidu.com
@@ -50,16 +50,39 @@ crawl-urlfilter.txt,
     Program arguments输入：`crawl urls -dir out -threads 20 -depth 4`
 
     crawl:是nutch的爬虫命令
-    urls:是新建的urls文件夹，用来读取要爬取得网址
-    -dir out：是爬去结果的输出路径、我们制定爬取的结果放置在与项目同路径的out（可自己取名）文件夹下，运行结束后在本地out文件夹下会生成5个文件夹：crawldb、index、indexes、linkdb、segments其中，linkdb是存放URL的互联关系的，是所有页面下载完成后所分析的来；indexes为每次下载的索引目录；index为Lucene格式的索引目录，为indexes中的索引合并后的完整索引，这一点从控制台的最后输出也可以看出来；segments存放抓取的页面信息，抓取多少层数的页面，就会有几个子文件夹，本文抓取层数为5，所以该文件下有5个子文件，每个子文件中又有一些子目录：其中，context为下载的页面内容；crawl_fetch为下载URL的状态；crawl_generate为待下载的URL集合信息；crawl_parse为外部链接库；parse_data为下载URL解析的外部链接及其他数据；parse_text为URL解析的文本内容
+
+    urls:是新建的urls文件夹，用来读取要爬取的网址
+    
+    -dir out：是爬去结果的输出路径、我们制定爬取的结果放置在与项目同路径的out（可自己取名）文件夹下，运行结束后在本地out文件夹下会生成5个文件夹：crawldb、index、indexes、linkdb、segments
+    
+    linkdb是存放URL的互联关系的，是所有页面下载完成后所分析的来；
+    
+    indexes为每次下载的索引目录；
+    
+    index为Lucene格式的索引目录，为indexes中的索引合并后的完整索引，这一点从控制台的最后输出也可以看出来；
+    
+    segments存放抓取的页面信息，抓取多少层数的页面，就会有几个子文件夹，本文抓取层数为5，所以该文件下有5个子文件，每个子文件中又有一些子目录。
+    
+    子目录名|存放内容
+    ---|---
+    context|下载的页面内容
+    crawl_fetch|下载URL的状态
+    crawl_generate|待下载的URL集合信息
+    crawl_parse|外部链接库
+    parse_data|下载URL解析的外部链接及其他数据
+    parse_text|URL解析的文本内容
+
     -threads 20:是开启的进程数
+    
     -depth 2:是要爬取得深度（可以自己试着调节，从小到大）
+    
     -topN 10:是显示前10
-    VM arguments输入：-Xms32m -Xmx800m 这是设置内存大小，如果不设置会导致内存溢出异常
+
+    VM arguments输入：`-Xms32m -Xmx800m` 这是设置内存大小，如果不设置会导致内存溢出异常
 ## 3.将搜索布置在tomcat上
 
 1. 首先配置tomcat，有很多相关教程，此处省略
-2. 在下载的nutch-1.1中找到 nutch-1.1.war文件，复制至tomcat文件夹下的webapps目录下
+2. 在最初下载的nutch-1.1中找到 nutch-1.1.war文件，复制至tomcat文件夹下的webapps目录下
 3. 启动tomcat这时候会自动解压nutch-1.1.war，关闭tomcat
 4. webapps\nutch-1.1\WEB-INF\classes目录下的nutch-site.xml文件，修改其中的属性，添加：
 
