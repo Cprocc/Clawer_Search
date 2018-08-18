@@ -77,7 +77,7 @@ export PATH=$PATH:$HBASE_HOME/bin
    - 为了确保存储在hbase上，修改conf的gora.properties文件，增加配置 `gora.datastore.default=org.apache.gora.hbase.store.HBaseStore`
 3. 编译,在nutch目录下 `ant runtime`,如果跳出没有ant命令，根据提示apt安装后再次运行，此步骤需要下载依赖，花费时间较长，一般卡住了，不要着急。
 4. 在编译生成的runtime/local文件夹下，新建url文件夹，在该文件夹下新建seed.txt文件，并将要抓取的网址写在其中。
-5. 在 runtime/conf下，修改nutch-site.xml文件，增加下属性，保证插件加载的正确
+5. 在 runtime/local/conf下，修改nutch-site.xml文件，增加下属性，保证插件加载的正确
 
 ```xml
  <property>
